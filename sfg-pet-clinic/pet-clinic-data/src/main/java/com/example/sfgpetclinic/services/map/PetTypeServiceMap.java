@@ -14,6 +14,11 @@ public class PetTypeServiceMap extends AbstractMapService<PetType, Long> impleme
     }
 
     @Override
+    public void deleteById(Long id) {
+        super.deleteById(id);
+    }
+
+    @Override
     public void delete(PetType object) {
         super.delete(object);
     }

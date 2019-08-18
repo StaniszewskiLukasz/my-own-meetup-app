@@ -14,15 +14,15 @@ import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class OwnerSDJpaService implements OwnerService {
+public class OwnerJpaServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
     private final PetRepository petRepository;
     private final PetTypeRepository petTypeRepository;
 
-    public OwnerSDJpaService(OwnerRepository ownerRepository,
-                             PetRepository petRepository,
-                             PetTypeRepository petTypeRepository) {
+    public OwnerJpaServiceImpl(OwnerRepository ownerRepository,
+                               PetRepository petRepository,
+                               PetTypeRepository petTypeRepository) {
         this.ownerRepository = ownerRepository;
         this.petRepository = petRepository;
         this.petTypeRepository = petTypeRepository;
@@ -55,5 +55,10 @@ public class OwnerSDJpaService implements OwnerService {
     @Override
     public void delete(Owner owner) {
         ownerRepository.delete(owner);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        ownerRepository.deleteById(id);
     }
 }
