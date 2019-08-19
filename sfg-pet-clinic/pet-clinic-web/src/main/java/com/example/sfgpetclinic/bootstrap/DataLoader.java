@@ -1,10 +1,7 @@
 package com.example.sfgpetclinic.bootstrap;
 
 import com.example.sfgpetclinic.model.*;
-import com.example.sfgpetclinic.services.OwnerService;
-import com.example.sfgpetclinic.services.PetTypeService;
-import com.example.sfgpetclinic.services.SpecialtyService;
-import com.example.sfgpetclinic.services.VetService;
+import com.example.sfgpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +14,15 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {//wersja z adnotacją @Service w klasach
-        this.ownerService = ownerService;                                //serwisowych a DI poprzez konstruktor
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialtyService specialtyService, VisitService visitService) {
+        this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
 //    public DataLoader() {//wersja bez adnotacj @Service w klasach ownerService i VetService
@@ -83,7 +83,6 @@ public class DataLoader implements CommandLineRunner {
         owner2.setAddress("Wileńska 22");
         owner2.setCity("Lódź");
         owner2.setTelephone("654879632");
-        ownerService.save(owner2);
         System.out.println("Loaded Owners...");
 
         Pet petOfMarcin = new Pet();
@@ -92,6 +91,14 @@ public class DataLoader implements CommandLineRunner {
         petOfMarcin.setBirthDate(LocalDate.now());
         petOfMarcin.setName("Kiciuś");
         owner2.getPets().add(petOfMarcin);
+
+        ownerService.save(owner2);//ta metoda nadaje id ownerowi ale takze petowi!!!
+
+        Visit visit = new Visit();
+        visit.setDate(LocalDate.now());
+        visit.setDescription("claw remove");
+        visit.setPet(petOfMarcin);
+        visitService.save(visit);
 
         Vet vet1 = new Vet();
         vet1.setFirstName("Tomek");
