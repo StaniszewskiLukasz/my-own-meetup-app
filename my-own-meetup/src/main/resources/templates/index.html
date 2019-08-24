@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <th:block th:replace="~{includes/generalScript::head}">
+        <!--        to powyżej to powiedzenie że ta strona ma korzystać z html.generalScript-->
+    </th:block>
+
+
+</head>
+<body>
+<h1>Strona główna</h1>
+
+<a class="btn btn-large btn-info" href="sign-in.html" role="button">Zaloguj</a>
+
+<a class="btn btn-large btn-info" href="register.html">Zarejestruj</a>
+
+
+<th:block th:replace="~{includes/generalScript::end-of-body}"> </th:block>
+</body>
+</html>
