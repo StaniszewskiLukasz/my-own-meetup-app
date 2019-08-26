@@ -12,12 +12,16 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @NotNull(message = "Pole nie może być puste")
+@NotEmpty
+@NotBlank
 public class UserDto {
 
     @Size(max = 50,message = "Nazwa może mieć maksymalnie 50 znaków")
     private String name;
-//    @Pattern(regexp = ".+@.+")
+
+    @Pattern(regexp = ".+@.+")
     private String email;
+
     @Size(min = 8, max = 30, message
             = "Hasło musi mieć przynajmniej 8 znaków, ale nie więcej niż 30")
     private String password;

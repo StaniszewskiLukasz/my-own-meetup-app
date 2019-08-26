@@ -22,7 +22,8 @@ public class RegisterController {
     private final UserServiceImpl userService;
     private final UserDtoToUserModel userDtoToUserModel;
 
-    public RegisterController(UserRepository userRepository, UserDtoToUserModel userDtoToUserModel, UserServiceImpl userService, UserDtoToUserModel userDtoToUserModel1) {
+    public RegisterController(UserRepository userRepository, UserServiceImpl userService,
+                              UserDtoToUserModel userDtoToUserModel1) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.userDtoToUserModel = userDtoToUserModel1;
