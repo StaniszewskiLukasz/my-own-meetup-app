@@ -20,23 +20,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //my dosytajemy tu bildera nie tworzymy obiektu, ale musimy mu powiedzieć co ma robić
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//                //data source to interfejs z jdbc, jpa z niego też korzysta ale pod spodem, możemy go wyciągnąć tworząc z niego beana
-//                //dzięki temu wskazujemy z jakiej bazy ma pobierać dane do autentykacji
-//                .usersByUsernameQuery("SELECT u.name, u.password, 1 FROM user u WHERE u.name = ?")
-//                //tam powyżej te stringi mają odpowiadać nazwą kolumn w bazie danych
-//        //ta jedynka to aktywność naszego użytkownika
-//        //wpisujemy tam na sztywno że każdy jest aktywny bo nie mamy jeszcze określonej aktywności
-//        .authoritiesByUsernameQuery("") //TODO select z gita jarka z właśnymi nazwami tabel
-//                .passwordEncoder(passwordEncoder);
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()//to autoryzuje nasze requesty
@@ -49,9 +32,25 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/sign-in")
-                .loginProcessingUrl("/nie-mam-jej-jeszcze")
+                .loginProcessingUrl("/login-process")
                 .usernameParameter("password")
                 .failureUrl("/sign-in?error=true")
                 .defaultSuccessUrl("/event");
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //my dosytajemy tu bildera nie tworzymy obiektu, ale musimy mu powiedzieć co ma robić
+        auth.jdbcAuthentication().dataSource(dataSource)
+                //data source to interfejs z jdbc, jpa z niego też korzysta ale pod spodem, możemy go wyciągnąć tworząc z niego beana
+                //dzięki temu wskazujemy z jakiej bazy ma pobierać dane do autentykacji
+                .usersByUsernameQuery("SELECT u.name, u.password, 1 FROM user u WHERE u.name = ?")
+                //tam powyżej te stringi mają odpowiadać nazwą kolumn w bazie danych
+                //ta jedynka to aktywność naszego użytkownika
+                //wpisujemy tam na sztywno że każdy jest aktywny bo nie mamy jeszcze określonej aktywności
+                .authoritiesByUsernameQuery("SELECT u.name, r.role_name FROM user u JOIN user_roles ur ON u.id = ur.user_id" +
+                        "JOIN role r ON ur.roles_id = r.id" +
+                        "WHERE u.name = ?")//TODO tu może być błąd w nazwie tabeli user_roles
+                .passwordEncoder(passwordEncoder);
     }
 }
