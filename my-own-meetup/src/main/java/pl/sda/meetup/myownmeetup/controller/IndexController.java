@@ -11,4 +11,9 @@ public class IndexController {
 
         return "index";
     }
+
+    @GetMapping("/restricted")
+    public String restrictedPage() {
+        return "restricted";
+    }
 }

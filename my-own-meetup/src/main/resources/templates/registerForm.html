@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RegisterForm</title>
+    <th:block th:replace="~{includes/generalScript::head}"></th:block>
+</head>
+<h1>Rejestracja Zapasowa</h1>
+<body>
+
+<form method="post" th:action="@{/registerForm.html}" th:object="${userDto}">
+    <input type="text" placeholder="Wpisz swoją nazwę użytkownika."
+           th:field="*{name}">
+    <span th:errors="*{name}">Invalid username</span>
+    <br>
+    <div class="form-group">
+        <label>Hasło</label>
+        <input type="password" name="password" placeholder="Wpisz hasło">
+    </div>
+    <br>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Wpisz mail">
+    </div>
+    <br>
+    <div class="form-group">
+        <label>Nazwa użytkownika</label>
+        <input type="submit" value="Register">
+    </div>
+</form>
+
+
+<th:block th:replace="~{includes/generalScript::end-of-body}"></th:block>
+</body>
+</html>
